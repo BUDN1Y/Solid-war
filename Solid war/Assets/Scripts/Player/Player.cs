@@ -5,8 +5,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _playerSpeed = 2f;
     private Rigidbody2D _rigidbody2D;
 
-
-    private void Awake()
+    public void Initialize()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -20,13 +19,7 @@ public class Player : MonoBehaviour
         return transform.position;
     }
     private void Move()
-    {
-        if (GameInput.Instance == null)
-        {
-            Debug.Log("GameInput Отсутствует");
-            return;
-        }
-
+    {     
         Vector2 inputVector = GameInput.Instance.GetMovementVector();
         inputVector = inputVector.normalized;
 

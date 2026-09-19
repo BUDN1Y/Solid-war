@@ -5,7 +5,7 @@ public class GameInput : MonoBehaviour
     public static GameInput Instance { get; private set; }
 
     private PlayerActionsInput _inputActions;
-    private void Awake()
+    public void Initialize()
     {
         Instance = this;
         _inputActions = new PlayerActionsInput();

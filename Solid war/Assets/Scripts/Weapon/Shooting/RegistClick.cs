@@ -3,6 +3,7 @@ using UnityEngine;
 
 public sealed class RegistClick : MonoBehaviour
 {
+    [SerializeField] Shooting _shooting;
     public static RegistClick Instance { get; private set; }  
 
     private PlayerActionsInput _inputActions;
@@ -16,6 +17,6 @@ public sealed class RegistClick : MonoBehaviour
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        Debug.Log("выстрел");
+        _shooting.RegistShoting();
     }
 }

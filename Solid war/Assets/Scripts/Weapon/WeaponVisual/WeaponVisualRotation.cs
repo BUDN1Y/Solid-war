@@ -5,6 +5,13 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class WeaponRotation : MonoBehaviour
 {
     [SerializeField] private Player _player;
+
+    private VectorToLineMouse _vectorToLineMouse;
+
+    private void Awake()
+    {
+        _vectorToLineMouse = new VectorToLineMouse();
+    }
     private void Update()
     {
         RotationSprite();
@@ -12,15 +19,8 @@ public class WeaponRotation : MonoBehaviour
     }
 
     private void RotationSprite()
-    {
-        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-        mouseScreenPos.z = 0;
-
-        mouseScreenPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        Vector2 dir = (Vector2)mouseScreenPos - (Vector2)transform.position;
-
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+    {       
+        transform.rotation = Quaternion.Euler(0, 0, _vectorToLineMouse.GetRotationToLineMouse(transform.position));
     }
 
     private void FlipWeapon()

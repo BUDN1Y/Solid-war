@@ -19,8 +19,13 @@ public class WeaponRotation : MonoBehaviour
     }
 
     private void RotationSprite()
-    {       
+    {
         transform.rotation = Quaternion.Euler(0, 0, _vectorToLineMouse.GetRotationToLineMouse(transform.position));
+    }
+
+    public Vector2 GetVectorDirectionToMouse()
+    {
+        return _vectorToLineMouse.GetVectorDirectionToMouse(transform.position);
     }
 
     private void FlipWeapon()
@@ -29,12 +34,8 @@ public class WeaponRotation : MonoBehaviour
         Vector2 playerPos = _player.GetPositionPlayer();
 
         Vector3 scale = transform.localScale;
-        scale.y = (mousePos.x < transform.position.x)
-            ? -Mathf.Abs(scale.y)
-            : Mathf.Abs(scale.y);
+        scale.y = (mousePos.x < transform.position.x) ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
         transform.localScale = scale;
-
-
     }
 }
 

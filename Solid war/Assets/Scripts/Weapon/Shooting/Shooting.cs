@@ -1,54 +1,54 @@
+using Assets.Scripts.Weapon.Shooting.Interface;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviour, IWeapon
 {
-    [SerializeField] private int _damege;
-    [SerializeField] private int _ataceSped;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _attackSpeed;
     [SerializeField] private int _linesFire;
     [SerializeField] private int _storeÑartridges;
     [SerializeField] private int _totalNumberÑartridges;
-    [SerializeField] private WeaponVisual _weaponVisual;
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private WeaponRotation _weaponRotation;
 
 
     private LineRenderer _lineRenderer;
-    private VectorToLineMouse _vectorToLineMouse;
-
+    private VectorDirectionToMouse _vectorToLineMouse;
+    private PlayerActionsInput _inputActions;
+    
     public void Initialize()
     {
+        _inputActions = new PlayerActionsInput();
+        _inputActions.Enable();
+        _inputActions.Combat.Shoot.performed += Shoot_performed;
+
         _lineRenderer = GetComponent<LineRenderer>();
-        _vectorToLineMouse = new VectorToLineMouse();
+        _vectorToLineMouse = new VectorDirectionToMouse();
     }
 
-    public void RegistShoting()
+    private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         Debug.Log("Âûñòðåë");
         if (_lineRenderer.positionCount != 0)
         {
             _lineRenderer.positionCount = 0;
         }
-        ShootingVisual();
-    }
-
-    private void ShootingVisual()
-    {
-        Vector2 origin = new Vector2()
-        {
-            x = transform.position.x,
-            y = transform.position.y
-        };
-
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        
         Vector2 direction = _weaponRotation.GetVectorDirectionToMouse();
-             
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, Mathf.Infinity);
-
+        ShootingReg(direction);
+    }
+        
+    public void ShootingReg(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity);
+        ShootingVisual(direction, hit);
+    }
+    public void ShootingVisual(Vector2 direction, RaycastHit2D hit)
+    {
         _lineRenderer.positionCount = 2;
-        _lineRenderer.SetPosition(0, origin);
+        _lineRenderer.SetPosition(0, transform.position);
 
         if (hit.collider != null)
         {
@@ -56,7 +56,7 @@ public class Shooting : MonoBehaviour
         }
         else
         {
-            _lineRenderer.SetPosition(1, origin + direction * 50f);
+            _lineRenderer.SetPosition(1, (Vector2)transform.position + direction * 50f);
         }
 
     }

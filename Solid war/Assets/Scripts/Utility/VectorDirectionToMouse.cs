@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class VectorToLineMouse
+public class VectorDirectionToMouse
 {
-    public float GetRotationToLineMouse(Vector3 startPosition)
+    public float GetRotation(Vector3 startPosition)
     {
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         mouseScreenPos.z = 0;
@@ -16,7 +15,7 @@ public class VectorToLineMouse
         return angle;
     }
 
-    public Vector2 GetVectorDirectionToMouse(Vector3 startPosition)
+    public Vector2 GetVectorDirection(Vector3 startPosition)
     {
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         mouseScreenPos.z = 0;

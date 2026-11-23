@@ -6,11 +6,11 @@ public class WeaponRotation : MonoBehaviour
 {
     [SerializeField] private Player _player;
 
-    private VectorToLineMouse _vectorToLineMouse;
+    private VectorDirectionToMouse _vectorToLineMouse;
 
     private void Awake()
     {
-        _vectorToLineMouse = new VectorToLineMouse();
+        _vectorToLineMouse = new VectorDirectionToMouse();
     }
     private void Update()
     {
@@ -20,12 +20,12 @@ public class WeaponRotation : MonoBehaviour
 
     private void RotationSprite()
     {
-        transform.rotation = Quaternion.Euler(0, 0, _vectorToLineMouse.GetRotationToLineMouse(transform.position));
+        transform.rotation = Quaternion.Euler(0, 0, _vectorToLineMouse.GetRotation(transform.position));
     }
 
     public Vector2 GetVectorDirectionToMouse()
     {
-        return _vectorToLineMouse.GetVectorDirectionToMouse(transform.position);
+        return _vectorToLineMouse.GetVectorDirection(transform.position);
     }
 
     private void FlipWeapon()
